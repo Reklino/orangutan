@@ -1,0 +1,68 @@
+<script type="text/javascript">
+var sortingOrder = 'name';
+</script>
+<div class="input-append">
+	<input type="text" ng-model="query" ng-change="search()" class="form-control" placeholder="Search">
+</div>
+
+<br>
+
+<table class="table table-striped table-hover">
+
+	<thead>
+		<tr>
+			<th class="username">
+				<a ng-click="sort_by('username')">	Username	<i></i></a>
+			</th>
+			<th class="email">
+				<a ng-click="sort_by('email')">		Email		<i></i></a>
+			</th>
+			<th class="role">
+				<a ng-click="sort_by('role')">		Role		<i></i></a>
+			</th>
+			<th class="group">
+				<a ng-click="sort_by('group')">		Group		<i></i></a>
+			</th>
+			<th class="text-muted">					Actions		</a>
+			</th>
+		</tr>
+	</thead>
+
+
+	<tfoot>
+		<td colspan="6">
+			<ul class="pagination">
+
+				<li ng-class="{disabled: currentPage == 0}">
+					<a href ng-click="prevPage()">Prev</a>
+				</li>
+
+				<li ng-repeat="n in range(pagedItems.length)"
+					ng-class="{active: n == currentPage}"
+					ng-click="setPage()">
+					<a href ng-bind="n + 1">1</a>
+				</li>
+
+				<li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+					<a href ng-click="nextPage()">Next</a>
+				</li>
+
+			</ul>
+		</td>
+	</tfoot>
+
+
+	<tbody>
+		<tr ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+			<td>{{ item.username }}</td>
+	        <td>{{ item.email }}</td>
+	        <td>{{ item.role }}</td>
+	        <td>{{ item.group }}</td>
+	        <td>
+	        	<a ng-href="/users/{{ item.id }}">View</a>
+	        	<span class="text-muted" ng-show="lvl1"> | </span><a ng-show="lvl1" href="" ng-click="deleteUser(item.id)">Delete</a>
+	        </td>
+		</tr>
+	</tbody>
+
+</table>

@@ -1,0 +1,199 @@
+<div class="inner header">
+	<div class="col-8">
+		<h2><i class="fa fa-child encircle"></i>Users <small>{{ numOfItems }}</small></h2>
+		<ul class="breadcrumb">
+			<li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+				<span class="divider">/</span>
+				<ng-switch on="$last">
+				<span ng-switch-when="true">{{breadcrumb.name}}</span>
+				<span ng-switch-default><a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a></span>
+				</ng-switch>
+			</li>
+		</ul>
+	</div>
+
+	<hr class="blank"></hr>
+</div>
+<div class="inner content">
+
+	<!-- *** Admin Only *** -->
+	<div ng-show="lvl1">
+
+		<!--                                   Create Header                                    -->
+		<div class="col-8">
+			<a href="" class="collapse-toggle" ng-click="isCollapsed = !isCollapsed">Create a new user<i class="fa fa-chevron-down pull-right"></i></a>
+		</div>
+
+
+		<!--                                   Alert Box                                   -->
+
+		<div class="alert alert-success col-8" ng-show="showSuccessAlert">
+			<button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')" >×</button>
+			<strong>Done!</strong> {{successTextAlert}}
+		</div>
+
+
+
+		<!--                                   Update Form                                    -->
+
+		<form class="form-horizontal clear collapse" collapse="!isCollapsed" id="create-user" role="form" ng-submit="submitUser()" autocomplete="off">
+
+			<hr class="blank"></hr>
+
+			<!-- Username -->
+			<div class="form-group">
+				<label for="username" class="col-2 control-label">Username</label>
+				<div class="col-6">
+					<input type="text" id="username" class="form-control" name="username" ng-model="userData.username" placeholder="Username" required>
+					<p class="help-block" ng-repeat="error in errors.username"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+			<!-- Email Address -->
+			<div class="form-group">
+				<label for="email" class="col-2 control-label">Email Address</label>
+				<div class="col-6">
+					<input type="email" id="email" class="form-control" name="email" ng-model="userData.email" placeholder="Email Address" required>
+					<p class="help-block" ng-repeat="error in errors.email"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+			<!-- Password -->
+			<div class="form-group">
+				<label for="password" class="col-2 control-label">
+					<i popover="Enter your desired new password here. The newPassword must be at least 7 characters. The newPassword must contain at least one lowercase letter, uppercase letter, and number." popover-title="Here's a tip..." popover-trigger="mouseenter" class="fa fa-info-circle"></i>
+					Password
+				</label>
+				<div class="col-6">
+					<input type="password" id="password" class="form-control" name="password" ng-model="userData.password" placeholder="Password" required>
+					<p class="help-block" ng-repeat="error in errors.password"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+			<!-- Confirm Password -->
+			<div class="form-group">
+				<label for="confirmPassword" class="col-2 control-label">
+					<i popover="Conirm your password by entering your new password again here." popover-title="Here's a tip..." popover-trigger="mouseenter" class="fa fa-info-circle"></i>
+					Confirm Password
+				</label>
+				<div class="col-6">
+					<input type="password" id="confirmPassword" class="form-control" name="confirmPassword" ng-model="userData.confirmPassword" placeholder="Confirm Password" required>
+					<p class="help-block" ng-repeat="error in errors.confirmPassword"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+			<!-- Role -->
+			<div class="form-group">
+				<label for="role" class="col-2 control-label">
+					<i popover="The user's role determines what he can do. See more in the manual." popover-title="Here's a tip..." popover-trigger="mouseenter" class="fa fa-info-circle"></i>
+					Role
+				</label>
+				<div class="col-6 select">
+					<select class="form-control" name="role" ng-model="userData.role"
+					ng-options="role.value as role.label for role in roles">
+				</select>
+				<p class="help-block" ng-repeat="error in errors.role"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+			<!-- Group -->
+			<div class="form-group">
+				<label for="group" class="col-2 control-label">
+					<i popover="The user's group determines which content he can see." popover-title="Here's a tip..." popover-trigger="mouseenter" class="fa fa-info-circle"></i>
+					Group
+				</label>
+				<div class="col-6 select">
+						<select class="form-control" name="group" ng-model="userData.group"
+						ng-options="group.value as group.label for group in groups">
+					</select>
+					<p class="help-block" ng-repeat="error in errors.role"><i class="fa fa-exclamation"></i>- {{ error }}</p>
+				</div>
+			</div>
+
+		<!-- Submit -->
+		<div class="form-group">
+			<div class="col-offset-2 col-6">
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</div>
+
+		<hr class="blank"></hr>
+
+	</form>
+<hr>
+</div>
+<!-- *** End Admin Only *** -->
+
+<!--                                   View Header                                    -->
+
+<h4 class="col-8 remove-top">View all Users</h4>
+<br />
+
+
+<!--                                   Search Bar                                    -->
+<div class="col-8">
+	<input type="text" ng-model="query" ng-change="search()" class="form-control" placeholder="Search Users">
+</div>
+<br />
+
+
+<!--                                   Loading                                    -->
+
+<div class="animate-show loading" ng-show="loading"><div class="loading9"><i></i><i></i><i></i><i></i></div></div>
+
+
+
+<!--                                   User Table                                    -->
+<div ng-hide="loading" class="table table-striped table-hover col-8">
+
+	<div class="thead">
+		<ul>
+			<li style="width: 20%" class="username"><a ng-click="sort_by('username')">		Username	<i></i></a></li>
+			<li style="width: 35%" class="email"><a ng-click="sort_by('email')">			Email		<i></i></a></li>
+			<li style="width: 10%" class="role"><a ng-click="sort_by('role')">				Role		<i></i></a></li>
+			<li style="width: 15%" class="group"><a ng-click="sort_by('group')">			Group		<i></i></a></li>
+			<li style="width: 20%" class="text-muted">										Actions		</a></li>
+		</ul>
+	</div>
+
+	<div class="tbody">
+		<ul class="animate-repeat" ng-repeat="item in pagedItems[currentPage] | orderBy:sortingOrder:reverse">
+			<li style="width: 20%">{{ item.username }}</li>
+			<li style="width: 35%">{{ item.email }}</li>
+			<li style="width: 10%">{{ item.role }}</li>
+			<li style="width: 15%">{{ item.group }}</li>
+			<li style="width: 20%">
+				<a ng-href="/users/{{ item.id }}">View</a>
+				<span class="text-muted" ng-show="lvl1"> | </span><a ng-show="lvl1" href="" ng-click="deleteUser(item.id)">Delete</a>
+			</li>
+		</ul>
+	</div>
+
+</div>
+
+<hr class="blank"></hr>
+
+<div class="col-8">
+	<ul class="pagination">
+
+		<li ng-class="{disabled: currentPage == 0}">
+			<a href ng-click="prevPage()">Prev</a>
+		</li>
+
+		<li ng-repeat="n in range(pagedItems.length)"
+		ng-class="{active: n == currentPage}"
+		ng-click="setPage()">
+		<a href ng-bind="n + 1">1</a>
+	</li>
+
+	<li ng-class="{disabled: currentPage == pagedItems.length - 1}">
+		<a href ng-click="nextPage()">Next</a>
+	</li>
+
+</ul>
+</div>
+<hr class="blank"></hr>				
+</div>
+
+
+

@@ -1,0 +1,301 @@
+//---------------------  Main Structure  -------------------------
+
+body { height: 100%; }
+#page, #content { height: 100%; }
+
+#site-navigation {
+	background: $header-color;
+	border-bottom: 1px solid $light2;
+	.navicon {
+		display: block;
+		float: left;
+		width: 80px;
+		height: #{$line*3}px;
+		line-height: #{$line*3}px;
+		.open-nav {
+		  position: absolute;
+		  z-index: 50;
+		  padding: 23px 0 0 23px;
+		  width: 70px;
+		  height: 70px;
+		  border-radius: 70px;
+		  @include box-sizing(border-box);
+		  cursor: pointer;
+		  display: block;
+		  @include transition;
+		}
+		.open-nav i {
+			@include transition;
+		  display: block;
+		  height: 3px;
+		  width: 25px;
+		  background: $dark1;
+		  opacity: 1;
+		}
+		.open-nav:before,
+		.open-nav:after {
+		  content: "";
+		  display: block;
+		  width: 30px;
+		  height: 3px;
+		  background: $dark1;
+		  @include transition;
+		}
+		.open-nav:before {
+		  margin-bottom: 6px;
+		}
+		.open-nav:after {
+		  margin-top: 6px;
+		}
+		.open-nav.sidebar-expand {
+		  padding: 24px 0 0 20px;
+		}
+		.open-nav.sidebar-expand i {
+			opacity: 0;
+		}
+		.open-nav.sidebar-expand:before {
+		  -moz-transform: rotate(45deg) translate(10px, 5px);
+		  -webkit-transform: rotate(45deg) translate(10px, 5px);
+		  -o-transform: rotate(45deg) translate(10px, 5px);
+		  -ms-transform: rotate(45deg) translate(10px, 5px);
+		  transform: rotate(45deg) translate(10px, 5px);
+		}
+		.open-nav.sidebar-expand:after {
+		  -moz-transform: rotate(-45deg) translate(8px, -3px);
+		  -webkit-transform: rotate(-45deg) translate(8px, -3px);
+		  -o-transform: rotate(-45deg) translate(8px, -3px);
+		  -ms-transform: rotate(-45deg) translate(8px, -3px);
+		  transform: rotate(-45deg) translate(8px, -3px);
+		}
+		@include bp(tablet1) {
+			display: none;
+		}
+	}
+
+	.nav-link {
+		display: block;
+		float: left;
+		text-decoration: none;
+		color: $dark2;
+		font-weight: 400;
+		padding: 1.5em 1.5em;
+		&:hover { color: $dark; background: $light1; }
+		i {
+			margin-left: 0.75em;
+		}
+	}
+}
+
+#content { width: 100%; }
+
+#masthead {
+	display: none;
+	text-align: center;
+}
+#masthead2 {
+	text-align: center;
+	padding: 0 1.5em;
+}
+
+#primary {
+	background: $background-color;
+	overflow: hidden;
+//	border-left: 1px solid $light2;
+	min-height: 100%;
+	.wrapper {
+		float: left;
+		width: 100%;
+	}
+	#main {
+		.header {
+			h2 {
+				text-align: center;
+			}
+		}
+		.content {
+			position: relative;
+			border-top: 1px solid $light2;
+			margin-top: -2px;
+			background: $main-color;
+			@include box-sizing(border-box);
+			padding-top: 3em;
+			padding-bottom: 1.5em;
+			@include bp(tablet1) {
+				@include border-radius;
+				border: 1px solid $light2;
+			}
+		}
+		clear: both;
+		padding: 1.5em 0 0;
+		min-height: 90%;
+		@include bp(tablet1) {
+			padding-bottom: 3em;
+		}
+	}
+}
+
+#secondary {
+	position: relative;
+	z-index: 5;
+	@include transition;
+	.sidebar {
+		@include transition;
+		position: fixed;
+		background: $sidebar-color;
+		min-height: 100%;
+		width: 80px;
+		left: -80px;
+		&.sidebar-expand {
+			left: 0px;
+		}
+		ul {
+			position: relative;
+			z-index: 1;
+			padding: 0;
+			margin: 0;
+			list-style: none;
+			height: 100%;
+			ul {
+				@include transition;
+				position: absolute;
+				height: auto;
+				z-index: -1;
+				background: $cyan;
+				width: 220px;
+				margin: -#{$line*3}px 0 0 -140px;
+				overflow: hidden;
+				@include border-radius(0 $default-border-radius $default-border-radius 0);
+				.nav-label {
+					font-weight: 500;
+					height: #{$line*2}px;
+					line-height: #{$line*2}px;
+					padding: 0 0 0 2em;
+					text-align: left;
+					color: $dark4;
+					background: $dark1;
+				}
+				li a, li:first-child a {
+					padding: 0 0 0 2em;
+					text-align: left;
+					width: 220px;
+					height: #{$line*2}px;
+					line-height: #{$line*2}px;
+					color: $light3;
+					background: $dark;
+					&:hover { background: $cyan; color: $light; }
+					&:active { background: $light; color: $cyan; }
+				}
+			}
+			li:hover {
+				ul {
+					margin-left: 80px;
+				}
+			}
+			li:first-child a{
+				color: $light;
+				background: $cyan;
+				&:hover { background: $dark; color: $cyan; }
+				&:active { background: $dark; color: $light; }
+			}
+			a {
+				display: block;
+				cursor: pointer;
+				width: 80px;
+				padding: 6px 1px 0 0;
+				@include box-sizing(border-box);
+				height: #{$line*3}px;
+				line-height: #{$line*3}px;
+				text-align: center;
+				color: $light3;
+				background: $dark1;
+				&:hover { background: $dark; color: $cyan; }
+				&:active { background: $dark; color: $light; }
+			}
+			.anchor-bottom {
+				position: absolute;
+				bottom: 0px;
+			}
+			.toolbar-muted a {
+				color: $dark4;
+				&:hover { background: $dark; color: $cyan; }
+				&:active { background: $dark; color: $light; }
+			}
+		}
+		@include bp(tablet1) {
+			left: 0px;
+		}
+	}
+	background: $sidebar-color;
+	min-height: 100%;
+	@include box-sizing(border-box);
+	overflow: hidden;
+	float: left;
+	width: 0px;
+	@include bp(tablet1) {
+		width: 80px;
+	}
+	padding: 0;
+	&.sidebar-expand {
+		width: 80px;
+	}
+}
+
+#colophon {
+	padding: 3em 0;
+	border-top: 1px solid $light2;
+	clear: both;
+	.site-footer-links {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		a { color: $dark2; }
+		li { float: left; margin: 0 1.5em 0 0; }
+		@include bp(tablet1) {
+			&.right {
+				li { float: right; margin: 0 0 0 1.5em; }
+			}
+		}
+	}
+}
+
+
+
+
+//---------------------  Buttons and Features  -------------------------
+
+#nav-button {
+	position: absolute;
+	border: 1px solid $light2;
+	border-width: 0 1px 1px;
+	margin: -1px 1.5em;
+	background: $light;
+	color: $light2;
+	cursor: pointer;
+	padding: .5em 1em .5em;
+	height: #{$line / $em + 1.5}em;
+	width: #{$line / $em + 1.5}em;
+	@include box-sizing(border-box);
+	&:hover {
+		background: $light2; color: $light;
+	}
+}
+
+/*
+*
+*  Fixes for IE6-8
+*  http://jonikorpi.com/leaving-old-IE-behind/
+*
+*/
+
+.ie body {
+	width: #{640/$em}em;
+	margin: 0 auto;
+	font-size: #{($font-size + 1) / $em}em;
+}
+
+.ie h1 {
+	@include huge;
+	margin: (48/42*1em) 0 (24/42*1em);
+}
+
+

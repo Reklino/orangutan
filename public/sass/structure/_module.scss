@@ -1,0 +1,405 @@
+//
+// Reusable Modules
+// --------------------------------------------------
+
+// Breadcrumbs Service
+.breadcrumb {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+	li { display: inline; }
+  color: $light4;
+}
+
+
+// Encircle Icons
+.encircle {
+  &.fa { display: block; margin: 0 auto;}
+  @include border-radius(100%);
+  border: 2px solid $cyan;
+  width: 48px; height: 48px;
+  padding-top: 7px;
+  @include box-sizing(border-box);
+  font-size: 75%;
+  line-height: 100%;
+  text-align: center;
+  vertical-align: top;
+  color: $cyan;
+  @include bp(tablet1) {
+    &.fa { display: inline-block; margin-right: 0.3em; }
+  }
+}
+
+
+// Horizontal Form
+.form-horizontal {
+	label {
+		display: inline;
+		float: none;
+		text-align: left;
+		height: auto;
+		line-height: auto;
+		@include bp(tablet1) {
+			display: block;
+			float: left;
+			text-align: right;
+			height: #{$line / $em + 1.5}em;
+			line-height: #{$line / $em + 1.5}em;
+		}
+	}
+	.form-control {
+		clear: both;
+	}
+}
+
+// Pagination Service
+.pagination {
+	list-style: none;
+	display: block;
+	padding: 0;
+	margin: 0;
+	li {
+		float: left;
+		height: #{$line / $em + 1.5}em;
+		@include box-sizing(border-box);
+		border: 1px solid $light2;
+		border-width: 1px 1px 1px 0;
+		&:first-child { border-left: 1px solid $light2; @include border-radius($default-border-radius 0 0 $default-border-radius); }
+		&:last-child { @include border-radius(0 $default-border-radius $default-border-radius 0); }
+	}
+	a {
+		display: block;
+		text-align: center;
+		line-height: #{$line / $em + 1.5}em;
+		padding: 0 1em;
+	}
+}
+
+// Collapse Toggle
+.collapse-toggle {
+	display: block;
+	line-height: #{$line / $em + 1.5}em;
+	@extend .form-control;
+	border: 0;
+	padding: 0;
+	margin-bottom: 0;
+	color: $dark3;
+
+	i { line-height: inherit; }
+	&:visited { color: $dark3; }
+	&:hover {
+		color: $dark1;
+		background: $light1;
+		padding: 0 1.5em;
+	}
+	&:active { color: $cyan; }
+}
+
+// Loading Icon
+.loading {
+  position: relative;
+	width: 100%;
+	text-align: center;
+	height: 0;
+  top: 48px;
+	margin: 0;
+	padding: 0;
+}
+.loading9 i{
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+  background: $cyan;
+}
+
+
+// Alert Boxes
+.alert {
+	background: $cyan;
+	color: $light;
+	@include border-radius;
+	margin: 0 #{($line/2)/$em}em 1.5em;
+	button { background: none; }
+	&.alert-info {
+		background: $light1;
+		border: 1px solid $light2;
+		color: $dark3;
+		button { color: $dark3; }
+	}
+}
+
+//
+// Dropdown menus
+// --------------------------------------------------
+
+
+// The dropdown wrapper (div)
+.dropdown {
+  position: relative;
+  float: left;
+  .dropdown-toggle {
+	@extend .nav-link;
+  }
+}
+
+// Prevent the focus on the dropdown toggle when closing dropdowns
+.dropdown-toggle:focus {
+  outline: 0;
+}
+
+// The dropdown menu (ul)
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: $dropdown-z;
+  display: none; // none by default, but block on "open" of the menu
+  float: left;
+  padding: 0;
+  margin: 0; // override default ul
+  list-style: none;
+  font-size: $font-size;
+  border: 1px solid $light2;
+  @include border-radius(0 0 $default-border-radius $default-border-radius);
+  background-color: $light;
+  background-clip: padding-box;
+
+  // Aligns the dropdown menu to right
+  //
+  // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
+  &.pull-right {
+    right: 0;
+    left: auto;
+  }
+
+  // Dividers (basically an hr) within the dropdown
+  .divider {
+    height: 1px;
+    width: 100%;
+    background: $light2;
+  }
+
+  // Links within the dropdown menu
+  > li > a {
+    color: $dark2;
+  	text-align: left;
+    display: block;
+    padding: 0 1.5em;
+    clear: both;
+    line-height: $line-height;
+    white-space: nowrap; // prevent links from randomly breaking onto new lines
+  }
+}
+
+// Hover/Focus state
+.dropdown-menu > li > a {
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    background-color: $light1;
+    color: $dark;
+  }
+}
+
+// Active state
+.dropdown-menu > .active > a {
+  &,
+  &:hover,
+  &:focus {
+    text-decoration: none;
+    outline: 0;
+  }
+}
+
+// Open state for the dropdown
+.open {
+  // Show the menu
+  > .dropdown-menu {
+    display: block;
+  }
+
+  // Remove the outline when :focus is triggered
+  > a {
+    outline: 0;
+  }
+}
+
+
+//
+// Popovers
+// --------------------------------------------------
+
+$popover-z: 15;
+$popover-bg: $light;
+$popover-border-color: $light3;
+$popover-arrow-color: $light;
+$popover-arrow-width: 11px;
+$popover-arrow-outer-width: 12px;
+$popover-arrow-outer-color: $light3;
+$popover-title-bg: $light1;
+
+.popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  @include small;
+  z-index: $popover-z;
+  display: none;
+  max-width: 250px;
+  padding: 1px;
+  text-align: left; // Reset given new insertion method
+  line-height: $line-single;
+  background-color: $popover-bg;
+  background-clip: padding-box;
+  border: 1px solid $popover-border-color;
+  @include border-radius;
+
+  // Overrides for proper insertion
+  white-space: normal;
+
+  // Offset the popover to account for the popover arrow
+  &.top     { margin-top: -$popover-arrow-width; }
+  &.right   { margin-left: $popover-arrow-width; }
+  &.bottom  { margin-top: $popover-arrow-width; }
+  &.left    { margin-left: -$popover-arrow-width; }
+}
+
+.popover-title {
+  margin: 0; // reset heading margin
+  padding: 8px 14px;
+  @include small;
+  font-weight: normal;
+  line-height: 18px;
+  background-color: $popover-title-bg;
+  border-bottom: 1px solid darken($popover-title-bg, 5%);
+  @include border-radius($default-border-radius $default-border-radius 0 0);
+}
+
+.popover-content {
+  padding: 9px 14px;
+}
+
+// Arrows
+//
+// .arrow is outer, .arrow:after is inner
+
+.popover > .arrow {
+  &,
+  &:after {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+  }
+}
+.popover > .arrow {
+  border-width: $popover-arrow-outer-width;
+}
+.popover > .arrow:after {
+  border-width: $popover-arrow-width;
+  content: "";
+}
+
+.popover {
+  &.top > .arrow {
+    left: 50%;
+    margin-left: -$popover-arrow-outer-width;
+    border-bottom-width: 0;
+    border-top-color: $popover-arrow-outer-color;
+    bottom: -$popover-arrow-outer-width;
+    &:after {
+      content: " ";
+      bottom: 1px;
+      margin-left: -$popover-arrow-width;
+      border-bottom-width: 0;
+      border-top-color: $popover-arrow-color;
+    }
+  }
+  &.right > .arrow {
+    top: 50%;
+    left: -$popover-arrow-outer-width;
+    margin-top: -$popover-arrow-outer-width;
+    border-left-width: 0;
+    border-right-color: $popover-arrow-outer-color;
+    &:after {
+      content: " ";
+      left: 1px;
+      bottom: -$popover-arrow-width;
+      border-left-width: 0;
+      border-right-color: $popover-arrow-color;
+    }
+  }
+  &.bottom > .arrow {
+    left: 50%;
+    margin-left: -$popover-arrow-outer-width;
+    border-top-width: 0;
+    border-bottom-color: $popover-arrow-outer-color;
+    top: -$popover-arrow-outer-width;
+    &:after {
+      content: " ";
+      top: 1px;
+      margin-left: -$popover-arrow-width;
+      border-top-width: 0;
+      border-bottom-color: $popover-arrow-color;
+    }
+  }
+
+  &.left > .arrow {
+    top: 50%;
+    right: -$popover-arrow-outer-width;
+    margin-top: -$popover-arrow-outer-width;
+    border-right-width: 0;
+    border-left-color: $popover-arrow-outer-color;
+    &:after {
+      content: " ";
+      right: 1px;
+      border-right-width: 0;
+      border-left-color: $popover-arrow-color;
+      bottom: -$popover-arrow-width;
+    }
+  }
+
+}
+
+
+//
+// Angular UI Directive Component animations
+// --------------------------------------------------
+
+.fade {
+  opacity: 0;
+  @include transition(opacity .15s linear);
+  &.in {
+    opacity: 1;
+  }
+}
+
+.collapse {
+  display: none;
+  margin: 0;
+  &.in {
+    display: block;
+  }
+}
+.collapsing {
+  position: relative;
+  margin: 0;
+  height: 0;
+  overflow: hidden;
+  @include transition(height .35s ease);
+}
+
+
+
+
+
+
+
+
+
+
+
+

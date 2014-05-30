@@ -1,0 +1,53 @@
+<div ng-init="$root.pageTitle = 'Reset Password'; $root.numOfItems = ''"></div>
+
+
+
+<!--                                   Alert Box                                    -->
+
+<div class="alert alert-info" ng-show="showSuccessAlert">
+	<button type="button" class="close" data-ng-click="switchBool('showSuccessAlert')" >×</button>
+	<strong>Success!</strong> {{successTextAlert}}
+</div>
+
+
+
+<!--                                   Password Reset Form                                    -->
+
+<form class="form-horizontal" role="form" ng-submit="resetPassword()">
+
+	<!-- Email Address -->
+	<div class="form-group">
+		<label for="email" class="col-sm-3 control-label">Email Address</label>
+		<div class="col-sm-9">
+			<input type="email" id="email" class="form-control" name="email" ng-model="passwordData.email" placeholder="Email Address" required>
+			<p class="help-block" ng-repeat="error in errors.email">{{ error }}</p>
+		</div>
+	</div>
+
+	<!-- New Password -->
+	<div class="form-group">
+		<label for="password" class="col-sm-3 control-label">New Password</label>
+		<div class="col-sm-9">
+			<input type="password" id="password" class="form-control" name="password" ng-model="passwordData.password" placeholder="New Password" required>
+			<p class="help-block" ng-repeat="error in errors.password">{{ error }}</p>
+		</div>
+	</div>
+
+	<!-- Confirm Password -->
+	<div class="form-group">
+		<label for="confirmPassword" class="col-sm-3 control-label">Confirm Password</label>
+		<div class="col-sm-9">
+			<input type="password" id="confirmPassword" class="form-control" name="confirmPassword" ng-model="passwordData.confirmPassword" placeholder="Confirm Password" required>
+			<p class="help-block" ng-repeat="error in errors.confirmPassword">{{ error }}</p>
+		</div>
+	</div>
+
+	<!-- Submit -->
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-9">
+			<button type="submit" class="btn btn-default">Submit</button>
+		</div>
+	</div>
+
+</form>
+

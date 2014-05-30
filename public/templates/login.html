@@ -1,0 +1,73 @@
+<div class="inner header">
+	<div class="col-8">
+		<h2><i class="fa fa-lock encircle"></i>Login</h2>
+		<ul class="breadcrumb">
+			<li ng-repeat="breadcrumb in breadcrumbs.getAll()">
+				<span class="divider">/</span>
+				<ng-switch on="$last">
+				<span ng-switch-when="true">{{breadcrumb.name}}</span>
+				<span ng-switch-default><a href="{{breadcrumb.path}}">{{breadcrumb.name}}</a></span>
+			</ng-switch>
+		</li>
+	</ul>
+</div>
+
+<hr class="blank"></hr>
+</div>
+<div class="inner content">
+	<div ng-init="$root.pageTitle = 'Login'; $root.numOfItems = '';"></div>
+
+	<!--                                   Alert Box                                    -->
+
+	<div class="alert alert-info" ng-show="showFailureAlert">
+		<button type="button" class="close" data-ng-click="switchBool('showFailureAlert')" >×</button>
+		<strong>Oops!</strong> {{failureTextAlert}}
+	</div>
+
+
+
+	<!--                                   Login Form                                    -->
+
+	<form class="form-horizontal clear" id="login" role="form" ng-show="{{ lvl4 }}" ng-submit="submitLogin()">
+
+
+		<!-- Email Address -->
+		<div class="form-group">
+			<label for="email" class="col-2 control-label">Email Address</label>
+			<div class="col-6">
+				<input type="email" id="email" class="form-control" name="email" ng-model="loginData.email" placeholder="Email Address" required>
+			</div>
+		</div>
+
+		<!-- Password -->
+		<div class="form-group">
+			<label for="password" class="col-2 control-label">Password</label>
+			<div class="col-6">
+				<input type="password" id="password" class="form-control" name="password" ng-model="loginData.password" placeholder="Password" required>
+			</div>
+		</div>
+
+		<!-- Options -->
+		<div class="form-group">
+			<div class="col-offset-2 col-6">
+
+				<!-- Remember Me -->
+				<div class="checkbox">
+					<label>
+						<input type="checkbox" name="remember" ng-model="loginData.remember" value="true"> Remember me <span class="text-muted"> | </span><a href="http://localhost:8000/password/remind" target="_self">Forgot your password?</a>
+					</label>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Submit -->
+		<div class="form-group">
+			<div class="col-offset-2 col-6">
+				<button type="submit" class="btn btn-default">Submit</button>
+			</div>
+		</div>
+
+	</form>
+	<hr class="blank"></hr>
+</div>
